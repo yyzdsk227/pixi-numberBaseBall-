@@ -1,0 +1,34 @@
+{
+  "frames": {
+    "baseball.png": {
+      "frame": { "x": 0, "y": 0, "w": 18, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 18, "h": 18 },
+      "sourceSize": { "w": 18, "h": 18 }
+    },
+    "baseball_hit1.png": {
+      "frame": { "x": 18, "y": 0, "w": 174, "h": 174 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 174, "h": 174 },
+      "sourceSize": { "w": 174, "h": 174 }
+    },
+    "baseball_hit2.png": {
+      "frame": { "x": 192, "y": 0, "w": 174, "h": 174 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 174, "h": 174 },
+      "sourceSize": { "w": 174, "h": 174 }
+    }
+  },
+  "meta": {
+    "app": "https://www.codeandweb.com/texturepacker",
+    "version": "1.0",
+    "image": "bball.png",
+    "format": "RGBA8888",
+    "size": { "w": 366, "h": 174 },
+    "scale": "1",
+    "smartupdate": "$TexturePacker:SmartUpdate:0818c083702e3156fd69bfa673de39f2:b5eca4ddb331b89928ba809a42d61035:27be169003dd2d8af72a550aa001a1ca$"
+  }
+}
