@@ -4,7 +4,7 @@ import { withApp } from "react-pixi-fiber";
 import Bunny from "./bunny";
 import stateContext from "./stateContext";
 import { useSelector, useDispatch } from "react-redux";
-import { bunStart, mlbResult } from "./action";
+import { bunStart, mlbResult, mlbRunResult } from "./action";
 import { SimplePlane } from "pixi.js";
 
 let abc;
@@ -70,7 +70,7 @@ const RotatingBunny = memo((props) => {
         async function homeruning() {
           await sleep(1500);
           xlocat -= props.speed * delta * 1.6;
-          props.useDispatch(mlbResult(xlocat, 2));
+          props.useDispatch(mlbRunResult(xlocat, 2));
         }
         homeruning();
       }

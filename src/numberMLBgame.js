@@ -12,7 +12,10 @@ import {
   mlbBalled,
   mlbStriked,
   bunStop,
+  mlbHittedCheck,
+  mlbHomerunCheck,
 } from "./action";
+import { getNumbers } from "./createMLBnum";
 
 const NumberMLBgame = () => {
   //   const [answer, setAnswer] = useState(getNumbers());
@@ -30,37 +33,31 @@ const NumberMLBgame = () => {
     console.log(inputEl.current.value, MLBgame.answer.join(""));
     dispatch(btnCtrl());
     if (inputEl.current.value === MLBgame.answer.join("")) {
-      //   setTries((t) => [
-      //     ...t,
-      //     {
-      //       try: MLBgame.value,
-      //       result: "홈런!",
-      //     },
-      //   ]);
-      //dispatch(mlbTries(inputEl.current.value, "홈런!"));
-      //  setResult("홈런!");
-      //dispatch(mlbResult("홈런!"));
-      // alert("게임을 다시 실행합니다.");
+      // async function HomeRun() {
+      //   await dispatch(mlbTries(inputEl.current.value, `홈런!`));
+      //   await sleep(1500);
+      //   dispatch(mlbResult());
+      //   await sleep(30);
+      //   dispatch(btnCtrl());
+      // }
 
-      // //  setValue("");
-      // dispatch(mlbValue(""));
-      // //   setAnswer(getNumbers());
-      // dispatch(mlbAnswer());
-      // //  setTries([]);
-      // dispatch(mlbInit());
+      // HomeRun();
+      const newAnswer = getNumbers();
+      console.log(newAnswer);
+      dispatch(mlbHomerunCheck(inputEl.current.value, `홈런!`, newAnswer));
+      //alert("게임을 다시 시작합니다.");
+      // async function resulting() {
+      //   // await dispatch(
+      //   //   mlbTries(inputEl.current.value, `${hit} 적중, ${ball} 볼입니다.`)
+      //   // );
 
-      async function HomeRun() {
-        await dispatch(mlbTries(inputEl.current.value, `홈런!`));
-        await sleep(1500);
-        dispatch(mlbResult());
-        await sleep(30);
-        dispatch(btnCtrl());
-      }
+      //   await sleep(1500);
+      //   dispatch(btnCtrl());
+      //   await sleep(30);
+      //   dispatch(bunStop());
+      // }
 
-      HomeRun();
-      //hit 여부 관련 상태값 추가, 액션함수, texture변경
-      //hit 여부 관련 상태값 추가, 액션함수, texture변경
-      // inputEl.current.focus();
+      // resulting();
     } else {
       const answerArray = inputEl.current.value
         .split("")
@@ -68,9 +65,9 @@ const NumberMLBgame = () => {
       let hit = 0;
       let ball = 0;
       console.log(answerArray);
-      if (MLBgame.tries.length >= 9) {
+      if (MLBgame.tries.length >= 10) {
         //setResult(`10번 넘게 틀려서 실패! 답은 ${answer.join(",")}였습니다!`); // state set은 비동기
-        dispatch(mlbResult("홈런!"));
+        // dispatch(mlbResult("홈런!"));
         alert("게임을 다시 시작합니다.");
         // setValue("");
         dispatch(mlbValue(""));
@@ -88,12 +85,7 @@ const NumberMLBgame = () => {
           if (answerArray[i] === MLBgame.answer[i]) {
             console.log("hit: ", hit, "   ", answerArray[i], MLBgame.answer[i]);
             hit += 1;
-            dispatch(mlbHitted());
-            //hit 여부 관련 상태값 추가, 액션함수, texture변경
-            //hit 여부 관련 상태값 추가, 액션함수, texture변경
-            setTimeout(() => {
-              dispatch(mlbHitted());
-            }, 1000); //애니 종료
+            //dispatch(mlbHittedCheck()); //애니 종료 포함
           } else if (MLBgame.answer.includes(answerArray[i])) {
             console.log(
               "ball",
@@ -103,38 +95,18 @@ const NumberMLBgame = () => {
               MLBgame.answer.indexOf(answerArray[i])
             );
             ball += 1;
-            dispatch(mlbBalled());
-            //Ball 여부 관련 상태값 추가, 액션함수, texture변경할 필요 없음
-            //Ball 여부 관련 상태값 추가, 액션함수, texture변경할 필요 없음
-            setTimeout(() => {
-              dispatch(mlbBalled());
-            }, 1000); //애니 종료
+            // dispatch(mlbBalled());
+            // setTimeout(() => {
+            //   dispatch(mlbBalled());
+            // }, 1000); //애니 종료
           } else {
-            dispatch(mlbStriked());
+            //dispatch(mlbStriked());
 
             setTimeout(() => {
               dispatch(mlbBalled());
             }, 1000); //애니 종료
           }
         }
-        // setTries((t) => [
-        //   ...t,
-        //   {
-        //     try: MLBgame.value,
-        //     result: `${hit} 스트라이크, ${ball} 볼입니다.`,
-        //   },
-        // ]);
-
-        // setTimeout(() => {
-        //   dispatch(
-        //     mlbTries(
-        //       inputEl.current.value,
-        //       `${hit} 스트라이크, ${ball} 볼입니다.`
-        //     )
-        //   );
-        // }, 1000); //애니 종료
-
-        // setValue("");
         dispatch(mlbValue(""));
 
         async function resulting() {
@@ -156,7 +128,7 @@ const NumberMLBgame = () => {
 
   return (
     <>
-      <h1>{MLBgame.result === 2 && "HOMERUN"}</h1>
+      <h1>{MLBgame.result === 2 ? "HOMERUN" : ""}</h1>
       <form onSubmit={onSubmitForm}>
         <input
           ref={inputEl}
@@ -166,7 +138,7 @@ const NumberMLBgame = () => {
         />
         <button>입력!</button>
       </form>
-      <div>시도: {MLBgame.tries.length}</div>
+      <div>시도: {MLBgame.tries.length - 1}</div>
       <ul>
         {MLBgame.tries.map((v, i) => (
           <Try key={`${i}차 시도 : ${v.try}`} tryInfo={v} />

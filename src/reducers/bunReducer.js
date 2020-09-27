@@ -1,3 +1,4 @@
+import { delay, put, takeLatest } from "redux-saga/effects";
 import {
   BUNSTART,
   BUNSTOP,
@@ -44,6 +45,7 @@ export default function bunReducer(state = initialState, action) {
       };
 
     case BUNSTOP:
+      console.log(action);
       return {
         ...state,
         locat: 810,
@@ -83,19 +85,21 @@ export default function bunReducer(state = initialState, action) {
       };
 
     case MLBINIT:
+      console.log(action);
       return {
-        ...state,
-        try: initialState.try,
+        ...initialState,
+        result: "",
+        answer: action.newAnswer,
       };
-
     case MLBRESULT:
       return {
         ...state,
-        locat: action.xlocat,
+        locat: action.xlocat > 810 ? 810 : action.xlocat,
         result: action.result,
       };
 
     case MLBHITTED:
+      console.log(action);
       return {
         ...state,
         hitted: state.hitted === false ? true : false,
